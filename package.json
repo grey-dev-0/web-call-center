@@ -1,0 +1,31 @@
+{
+    "private": true,
+    "scripts": {
+        "development": "mix",
+        "watch": "mix watch",
+        "hot": "mix watch --hot",
+        "production": "mix --production"
+    },
+    "dependencies": {
+        "bootstrap": "4.6.0",
+        "core-js": "^3.21.1",
+        "mitt": "^3.0.0",
+        "vue": "^3.2.31"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^4.5.15",
+        "@vue/cli-plugin-eslint": "^4.5.15",
+        "@vue/cli-service": "^4.5.15",
+        "@vue/compiler-sfc": "^3.2.31",
+        "cross-env": "^5.2.1",
+        "jquery": "^3.6",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "popper.js": "^1.16.1",
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "1.30.0",
+        "sass-loader": "^11.0.1",
+        "vue-loader": "^17.0.0"
+    }
+}
