@@ -12,6 +12,6 @@ return [
     // The model class of the agent who'd receive calls from customers.
     'agent_model' => \GreyZero\WebCallCenter\Models\Agent::class,
 
-    // The foreign key that joins an entity - presumably the agent - to an organization.
-    'organization_foreign_key' => 'organization_key'
+    // The foreign key that joins the entity representing the agent to an organization.
+    'organization_foreign_key' => 'organization_id'
 ];

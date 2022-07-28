@@ -14,6 +14,15 @@ trait ReceivesCalls{
     }
 
     /**
+     * Call received by this agent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function calls(){
+        return $this->hasMany(\GreyZero\WebCallCenter\Models\Call::class, 'agent_id');
+    }
+
+    /**
      * Picks up -answers- the given call for this agent.
      *
      * @param \GreyZero\WebCallCenter\Models\Call|int $call The instance or the ID of the call to be answered.

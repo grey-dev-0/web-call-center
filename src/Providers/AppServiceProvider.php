@@ -1,6 +1,6 @@
 <?php
 
-namespace GreyZero\WebCallCenter;
+namespace GreyZero\WebCallCenter\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,7 +11,7 @@ class AppServiceProvider extends ServiceProvider{
      * @return void
      */
     public function register(){
-        $this->mergeConfigFrom(__DIR__.'/../config/web-call-center.php', 'web-call-center');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/web-call-center.php', 'web-call-center');
     }
 
     /**
