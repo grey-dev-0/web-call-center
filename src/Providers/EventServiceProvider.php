@@ -9,6 +9,11 @@ class EventServiceProvider extends ServiceProvider{
      * @inheritdoc
      */
     protected $listen = [
-        \GreyZero\WebCallCenter\Events\CallCreated::class => []
+        \GreyZero\WebCallCenter\Events\CallCreated::class => [
+            \GreyZero\WebCallCenter\Listeners\IncomingCall::class
+        ],
+        \GreyZero\WebCallCenter\Events\CallEnded::class => [
+            \GreyZero\WebCallCenter\Listeners\RearrangeCallsQueue::class
+        ]
     ];
 }

@@ -5,6 +5,8 @@ namespace GreyZero\WebCallCenter\Traits;
 use GreyZero\WebCallCenter\Models\Organization;
 
 trait MakesCalls{
+    use EndsCalls;
+
     /**
      * The calls that the customer has initiated.
      *
@@ -40,7 +42,6 @@ trait MakesCalls{
         while(!$semaphore->get())
             usleep(25000);
         $agent_id = $organization->leastOccupiedAgent->id;
-        cache()->put("$semaphoreKey-min", $agent_id);
 
         // Calls queueing is included within the locked process to avoid improper least occupied agent identification
         // by other processes or call requests.

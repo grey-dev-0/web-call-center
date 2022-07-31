@@ -19,7 +19,17 @@ trait HasAgents{
      * @return \GreyZero\WebCallCenter\Models\Agent|null
      */
     public function getLeastOccupiedAgentAttribute(){
-        return (cache()->has($key = "wcc-o-{$this->id}-min"))? $this->agents()->find($key) :
-            $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->orderBy('calls_count')->first();
+        return $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->orderBy('calls_count')->first();
+    }
+
+    /**
+     * Gets the most occupied agent in the organization i.e. the agent with the most pending calls - if exists.
+     *
+     * @throws \Exception
+     * @return \GreyZero\WebCallCenter\Models\Agent|null
+     */
+    public function getMostOccupiedAgentAttribute(){
+        return $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->where('calls_count', '>', 1)
+            ->orderBy('calls_count', 'desc')->first();
     }
 }

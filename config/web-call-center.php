@@ -13,5 +13,8 @@ return [
     'agent_model' => \GreyZero\WebCallCenter\Models\Agent::class,
 
     // The foreign key that joins the entity representing the agent to an organization.
-    'organization_foreign_key' => 'organization_id'
+    'organization_foreign_key' => 'organization_id',
+
+    // The default datetime format used by the package.
+    'datetime_format' => 'd/m/Y h:i:s A'
 ];
