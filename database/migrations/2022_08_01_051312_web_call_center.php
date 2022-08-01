@@ -56,6 +56,15 @@ class WebCallCenter extends Migration{
             $table->foreign('agent_id')->references('id')->on((new $agentModel)->getTable())
                 ->onUpdate('cascade')->onDelete('cascade');
         });
+
+        if(config('web-call-center.middleware') == 'wcc')
+            Schema::create(config('web-call-center.tables_prefix').'_users', function(Blueprint $table){
+                $table->increments('id');
+                $table->morphs('authenticatable');
+                $table->string('username');
+                $table->string('password', 100);
+                $table->rememberToken();
+            });
     }
 
     /**
@@ -64,6 +73,7 @@ class WebCallCenter extends Migration{
      * @return void
      */
     public function down(){
+        Schema::dropIfExists(config('web-call-center.tables_prefix').'_users');
         Schema::dropIfExists(config('web-call-center.tables_prefix').'_calls');
         Schema::dropIfExists(config('web-call-center.tables_prefix').'_agents');
         Schema::dropIfExists(config('web-call-center.tables_prefix').'_organizations');

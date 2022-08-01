@@ -3,6 +3,13 @@ return [
     // Prefix of database tables included in this package.
     'tables_prefix' => 'wcc',
 
+    // Default authentication middleware.
+    // Set to other than default value to use your own authentication model and middleware.
+    'middleware' => 'wcc',
+
+    // You can set a fixed URL prefix for all routes served by the package here.
+    'prefix' => null,
+
     // The model class of the customer who'd initiate calls to the call center.
     'customer_model' => \GreyZero\WebCallCenter\Models\Customer::class,
 

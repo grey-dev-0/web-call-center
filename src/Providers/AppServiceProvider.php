@@ -23,5 +23,27 @@ class AppServiceProvider extends ServiceProvider{
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         $this->publishes([__DIR__.'/../../database/seeders' => database_path('seeders')], 'seeder');
+
+        \Illuminate\Database\Eloquent\Relations\Relation::enforceMorphMap([
+            'agent' => \GreyZero\WebCallCenter\Models\Agent::class,
+            'customer' => \GreyZero\WebCallCenter\Models\Customer::class
+        ]);
+
+        if(config('web-call-center.middleware') == 'wcc')
+            $this->registerMiddleware();
+        $this->registerRoutes();
+    }
+
+    private function registerMiddleware(){
+        \Route::aliasMiddleware('wcc', \GreyZero\WebCallCenter\AppMiddleware::class);
+    }
+
+    private function registerRoutes(){
+        $namespace = 'GreyZero\WebCallCenter\Controllers';
+        $router = \Route::middleware(config('web-call-center.middleware'));
+        if(!is_null($prefix = config('web-call-center.prefix')))
+            $router->prefix($prefix);
+        $router->namespace($namespace)->group(__DIR__.'/../../routes/app.php');
+        \Route::group((!empty($prefix)? compact('prefix') : []) + compact('namespace'), __DIR__.'/../../routes/auth.php');
     }
 }

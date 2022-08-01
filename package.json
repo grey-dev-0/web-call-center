@@ -7,6 +7,8 @@
         "production": "mix --production"
     },
     "dependencies": {
+        "agora-rtc-sdk-ng": "^4.13.0",
+        "agora-rtm-sdk": "^1.5.0",
         "bootstrap": "4.6.0",
         "core-js": "^3.21.1",
         "mitt": "^3.0.0",

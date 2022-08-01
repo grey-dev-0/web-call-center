@@ -22,4 +22,13 @@ class Agent extends Model{
 
         parent::__construct($attributes);
     }
+
+    /**
+     * The agent's user account.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function user(){
+        return $this->morphOne(User::class, 'authenticatable');
+    }
 }
