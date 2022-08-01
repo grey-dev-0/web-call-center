@@ -12,4 +12,14 @@ class Agent extends Model{
      * @inheritdoc
      */
     protected $guarded = [];
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(array $attributes = []){
+        $this->table = config('web-call-center.tables_prefix').'_agents';
+        $this->incrementing = config('web-call-center.incremental_primary_keys.agents');
+
+        parent::__construct($attributes);
+    }
 }

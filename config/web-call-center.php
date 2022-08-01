@@ -16,5 +16,14 @@ return [
     'organization_foreign_key' => 'organization_id',
 
     // The default datetime format used by the package.
-    'datetime_format' => 'd/m/Y h:i:s A'
+    'datetime_format' => 'd/m/Y h:i:s A',
+
+    // The primary keys to be set as incremental for the tables that will be created by the package.
+    // Only for entities that were not changed from their default values above e.g. "customer_model".
+    // Set any of them to false if you're going to define the value of each model's id manually.
+    'incremental_primary_keys' => [
+        'customers' => true,
+        'organizations' => true,
+        'agents' => true
+    ]
 ];

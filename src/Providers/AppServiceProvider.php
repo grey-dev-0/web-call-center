@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider{
      * @return void
      */
     public function boot(){
-        //
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+        $this->publishes([__DIR__.'/../../database/seeders' => database_path('seeders')], 'seeder');
     }
 }

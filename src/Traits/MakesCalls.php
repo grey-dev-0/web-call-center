@@ -13,7 +13,7 @@ trait MakesCalls{
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function calls(){
-        return $this->hasMany(\GreyZero\WebCallCenter\Models\Call::class);
+        return $this->hasMany(\GreyZero\WebCallCenter\Models\Call::class, 'customer_id');
     }
 
     /**
