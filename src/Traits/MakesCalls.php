@@ -8,6 +8,15 @@ trait MakesCalls{
     use EndsCalls;
 
     /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn(){
+        return "customer.{$this->id}";
+    }
+
+    /**
      * The calls that the customer has initiated.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

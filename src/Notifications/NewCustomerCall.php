@@ -44,9 +44,11 @@ class NewCustomerCall extends Notification{
      */
     public function toBroadcast($notifiable){
         return new BroadcastMessage([
-            'id' => $this->call->id,
-            'name' => $this->call->customer->name,
-            'created_at' => $this->call->created_at->format(config('web-call-center.datetime_format'))
+            'customer' => [
+                'id' => $this->call->id,
+                'name' => $this->call->customer->name,
+                'created_at' => $this->call->created_at->format(config('web-call-center.datetime_format'))
+            ]
         ]);
     }
 }

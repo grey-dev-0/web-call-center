@@ -14,7 +14,7 @@ class AppMiddleware extends Authenticate{
         if(!empty($prefix = config('web-call-center.prefix')))
             $path = str_replace("$prefix/", '', $path);
         if(!\Str::startsWith($path, auth()->user()->authenticatable_type))
-            abort(403);
+            return redirect((!empty($prefix)? "$prefix/" : '').'login');
 
         return $next($request);
     }

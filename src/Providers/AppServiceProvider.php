@@ -21,8 +21,11 @@ class AppServiceProvider extends ServiceProvider{
      */
     public function boot(){
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'wcc');
 
         $this->publishes([__DIR__.'/../../database/seeders' => database_path('seeders')], 'seeder');
+        $this->publishes([__DIR__.'/../../resources/views' => base_path('resources/views/vendor/wcc')], 'views');
+        $this->publishes([__DIR__.'/../../public' => public_path('vendor/wcc')], 'assets');
 
         \Illuminate\Database\Eloquent\Relations\Relation::enforceMorphMap([
             'agent' => \GreyZero\WebCallCenter\Models\Agent::class,
