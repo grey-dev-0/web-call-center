@@ -7,6 +7,7 @@
     <title>Web Call Center</title>
     <link rel="stylesheet" href="{{asset(mix('css/vendors.css', 'vendor/wcc'))}}" type="text/css">
     <link rel="stylesheet" href="{{asset(mix('css/login.css', 'vendor/wcc'))}}" type="text/css">
+    <script type="text/javascript" src="{{asset(mix('js/manifest.js', 'vendor/wcc'))}}"></script>
     <script type="text/javascript" src="{{asset(mix('js/vendors.js', 'vendor/wcc'))}}"></script>
 </head>
 <body class="bg-blue-grey-10">
@@ -14,7 +15,7 @@
     <div class="col-xs-12 col-sm-10 col-md-5 col-lg-4" id="login">
         <div class="card bg-white border-blue-3">
             @if(isset($fail))
-                <div class="alert alert-danger alert-dismissible mb-0">
+                <div class="alert alert-danger alert-dismissible fade show mb-0">
                     <span class="close p-0" data-dismiss="alert">&times;</span>
                     Wrong username and / or password!
                 </div>

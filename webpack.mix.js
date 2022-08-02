@@ -18,7 +18,11 @@ mix.setPublicPath(path.normalize('./public'));
 if(mix.inProduction())
     mix.version();
 
-mix.extract(['jquery', 'bootstrap', '@vue'], 'js/vendors');
+mix.extract(['@vue'], 'js/vue.min');
+mix.copy([
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+    'node_modules/jquery/dist/jquery.min.js'
+], './public/js/vendors.js');
 glob.sync('resources/scss/*.scss').forEach(function(file){
     file = file.replace(/[\\\/]+/g, '/');
     let dest = file.replace('resources/scss', 'public/css').replace(/\.(scss|sass)$/, '.css');

@@ -1,5 +1,3 @@
-import 'jquery';
-import 'bootstrap';
 import {createApp} from "vue";
 import Echo from "laravel-echo"
 import AgoraRTC from "agora-rtc-sdk-ng"

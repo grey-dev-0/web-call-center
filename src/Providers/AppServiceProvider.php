@@ -32,8 +32,13 @@ class AppServiceProvider extends ServiceProvider{
             'customer' => \GreyZero\WebCallCenter\Models\Customer::class
         ]);
 
-        if(config('web-call-center.middleware') == 'wcc')
+        if(config('web-call-center.middleware') == 'wcc'){
+            config(['auth.providers.users' => [
+                'driver' => 'eloquent',
+                'model' => \GreyZero\WebCallCenter\Models\User::class
+            ]]);
             $this->registerMiddleware();
+        }
         $this->registerRoutes();
     }
 
