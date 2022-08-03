@@ -48,10 +48,11 @@ class AppServiceProvider extends ServiceProvider{
 
     private function registerRoutes(){
         $namespace = 'GreyZero\WebCallCenter\Controllers';
-        $router = \Route::middleware(config('web-call-center.middleware'));
+        $router = \Route::middleware(['web', config('web-call-center.middleware')]);
         if(!is_null($prefix = config('web-call-center.prefix')))
             $router->prefix($prefix);
         $router->namespace($namespace)->group(__DIR__.'/../../routes/app.php');
-        \Route::group((!empty($prefix)? compact('prefix') : []) + compact('namespace'), __DIR__.'/../../routes/auth.php');
+        \Route::group((!empty($prefix)? compact('prefix') : []) + compact('namespace') + ['middleware' => 'web'],
+            __DIR__.'/../../routes/auth.php');
     }
 }

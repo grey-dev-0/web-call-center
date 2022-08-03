@@ -13,6 +13,16 @@ class User extends Authenticatable{
     /**
      * @inheritdoc
      */
+    public $timestamps = false;
+
+    /**
+     * @inheritdoc
+     */
+    public $incrementing = false;
+
+    /**
+     * @inheritdoc
+     */
     protected $guarded = [];
 
     /**
@@ -50,5 +60,14 @@ class User extends Authenticatable{
      */
     public function authenticatable(){
         return $this->morphTo();
+    }
+
+    /**
+     * Gets the role of the user an "agent" or a "customer".
+     *
+     * @return string
+     */
+    public function getRoleAttribute(){
+        return $this->authenticatable_type;
     }
 }

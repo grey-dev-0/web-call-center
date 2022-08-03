@@ -38,9 +38,11 @@ class TestSeeder extends Seeder{
 
         for($j = 0; $j < 2; $j++)
             for($i = 0; $i < 5; $i++)
-                Agent::create(['organization_id' => $organizationIds[$j], 'name' => $this->faker->name()]);
+                Agent::create(['organization_id' => $organizationIds[$j], 'name' => $this->faker->name()])
+                    ->user()->create(['username' => "agent$j$i", 'password' => \Hash::make('test123')]);
 
         for($i = 0; $i < 10; $i++)
-            Customer::create(['name' => $this->faker->name()]);
+            Customer::create(['name' => $this->faker->name()])
+                ->user()->create(['username' => "client$j$i", 'password' => \Hash::make('test123')]);
     }
 }

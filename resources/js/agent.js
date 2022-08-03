@@ -4,32 +4,32 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk";
 window.Pusher = require('pusher-js');
 
+let rtc = {}, rtm = {client: {}, channel: {}}, signaling = {}, $ = window.$;
 let app = createApp({
     data(){
         return {
-            rtc: {},
-            rtm: {},
-            signaling: {},
+            inCall: false,
             customers: []
         };
     },
     mounted(){
-        window.Echo = this.signaling = new Echo({
+        window.Echo = signaling = new Echo({
             broadcaster: 'pusher',
             key: 'wcckey',
             wsHost: window.location.hostname,
-            wsPort: 6001,
-            forceTLS: false,
+            wssPort: 443,
+            encrypted: true,
             disableStats: true
         });
-        this.signaling.private('agent.' + window.rtc.agent_id).listen('calls.incoming', (e) => {
+        signaling.private('agent.' + window.a).listen('calls.incoming', (e) => {
             this.customers.push(e.customer);
         });
 
-        this.rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
-        this.rtm = AgoraRTM.createInstance(window.rtc.app_id);
-        this.rtm.login({uid: 'a-' + window.rtc.agent_id});
+        rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
+        rtm.client = AgoraRTM.createInstance(window.rtc.app_id);
+        rtm.channel = rtm.client.createChannel(window.rtc.agent_id);
+        rtm.client.login({uid: window.rtc.agent_id, token: window.rtc.token});
     }
 });
 
-app.mount('#app');
+app.mount('#wcc-app');

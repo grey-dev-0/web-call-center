@@ -12,4 +12,9 @@ class AuthController extends Controller{
             return redirect(config('web-call-center.prefix').'/'.auth()->user()->role);
         return view('wcc::login', ['fail' => true]);
     }
+
+    public function getLogout(){
+        auth()->logout();
+        return redirect()->route('wcc.login');
+    }
 }

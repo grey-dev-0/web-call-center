@@ -18,4 +18,8 @@ class AppMiddleware extends Authenticate{
 
         return $next($request);
     }
+
+    protected function redirectTo($request){
+        return redirect((!empty($prefix)? "$prefix/" : '').'login');
+    }
 }
