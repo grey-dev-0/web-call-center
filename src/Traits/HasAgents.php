@@ -13,6 +13,15 @@ trait HasAgents{
     }
 
     /**
+     * All calls received by this organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function calls(){
+        return $this->hasManyThrough(\GreyZero\WebCallCenter\Models\Call::class, \GreyZero\WebCallCenter\Models\Agent::class);
+    }
+
+    /**
      * Gets the least occupied agent in the organization i.e. the agent with the least pending calls - if exists.
      *
      * @throws \Exception

@@ -11,11 +11,13 @@
 @endpush
 
 @section('content')
-    <div id="wcc-app" class="container-fluid pt-2">
-        <h1>Welcome {{$agent->name}}</h1>
+    <div id="wcc-app" class="container pt-2">
+        <h3 class="float-left">Welcome {{$agent->name}}</h3>
+        <a href="{{route('wcc-logout')}}" class="float-right btn btn-outline-secondary">Logout</a>
+        <div class="clearfix"></div>
         <div class="card">
             <div class="card-body p-0">
-                <table id="customers-list" class="table table-hover table-striped">
+                <table id="customers-list" class="table table-hover table-striped mb-0">
                     <thead>
                     <tr>
                         <th>Customer</th>
@@ -24,12 +26,12 @@
                     </thead>
                     <tbody>
                     <template v-if="customers.length" v-for="(customer, i) in customers">
-                        <tr :class="inCall? 'bg-success' : ''">
+                        <tr :class="(inCall && i == 0)? 'bg-success' : ''">
                             <td>
                                 @{{ customer.name }}
-                                <span class="btn btn-outline-success ml-1" v-if="!inCall && i == 0" @click="pick(customer)"></span>
+                                <span class="btn btn-sm btn-outline-success ml-4" v-if="!inCall && i == 0" @click="pick(customer)">Pick Up</span>
                             </td>
-                            <td>@{{ customer.created_at }}</td>
+                            <td>@{{ customer.joined_at }}</td>
                         </tr>
                     </template>
                     <tr v-else>

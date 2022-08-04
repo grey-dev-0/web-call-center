@@ -55,6 +55,9 @@ class WebCallCenter extends Migration{
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('agent_id')->references('id')->on((new $agentModel)->getTable())
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
+            $table->timestamps();
         });
 
         if(config('web-call-center.middleware') == 'wcc')
