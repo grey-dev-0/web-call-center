@@ -55,7 +55,7 @@ trait MakesCalls{
         // Calls queueing is included within the locked process to avoid improper least occupied agent identification
         // by other processes or call requests.
         if(is_null($call = $organization->calls()->whereCustomerId($this->id)->whereNull('ended_at')->first()))
-            $call = $this->newQuery()->calls()->create(compact('agent_id'));
+            $call = $this->calls()->create(compact('agent_id'));
         $semaphore->forceRelease();
         return $call;
     }

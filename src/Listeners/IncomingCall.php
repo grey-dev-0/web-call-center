@@ -10,6 +10,6 @@ class IncomingCall{
      * @return void
      */
     public function handle(\GreyZero\WebCallCenter\Events\CallCreated $event){
-        $event->call->agent->notify();
+        $event->call->agent->notify(new \GreyZero\WebCallCenter\Notifications\NewCustomerCall($event->call));
     }
 }

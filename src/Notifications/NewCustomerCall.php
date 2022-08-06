@@ -47,7 +47,7 @@ class NewCustomerCall extends Notification{
             'customer' => [
                 'id' => $this->call->id,
                 'name' => $this->call->customer->name,
-                'created_at' => $this->call->created_at->format(config('web-call-center.datetime_format'))
+                'joined_at' => $this->call->created_at->format(config('web-call-center.datetime_format'))
             ]
         ]);
     }
