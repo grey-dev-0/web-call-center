@@ -28,7 +28,10 @@
                     <template v-if="organizations.length" v-for="(organization, i) in organizations">
                         <tr :class="inCall == organization.id? 'bg-success' : ''">
                             <td class="align-middle">@{{ organization.name }}</td>
-                            <td class="text-right"><div class="btn btn-sm btn-outline-success" @click="call(organization)">Call</div></td>
+                            <td class="text-right">
+                                <div class="btn btn-sm btn-outline-success" v-if="!inCall" @click="call(organization)">Call</div>
+                                <div class="btn btn-sm btn-outline-danger" v-else-if="inCall == organization.id" @click="hangup(true)">Hang Up</div>
+                            </td>
                         </tr>
                     </template>
                     <tr v-else>

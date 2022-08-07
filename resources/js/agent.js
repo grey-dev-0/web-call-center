@@ -4,7 +4,7 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk";
 window.Pusher = require('pusher-js');
 
-let rtc = {}, rtm = {client: {}, channel: {}}, signaling = {}, $ = window.$;
+let rtc = {}, rtm = {client: {}, channel: {}}, signaling = {}, $ = window.$, localAudioTrack, customer_id;
 let app = createApp({
     data(){
         return {
@@ -32,6 +32,12 @@ let app = createApp({
             rtm.channel = rtm.client.createChannel(window.rtc.agent_id);
             rtm.client.login({uid: window.rtc.agent_id, token: window.rtc.token})
                 .then(() => rtm.channel.join());
+
+            rtc.on('user-published', async (peer, type) => {
+                await rtc.subscribe(peer, type);
+                user.audioTrack.play();
+            });
+            rtc.on('user-unpublished', async (peer) => await rtc.unsubscribe(peer));
         },
         initCustomers(){
             $.get(window.b + '/customers', (response) => {
@@ -39,7 +45,30 @@ let app = createApp({
             });
         },
         pick(customer){
-
+            this.inCall = customer.id;
+            $.get(window.b + '/pick/' + this.inCall, (response) => {
+                customer_id = response.customer_id;
+                $.get(window.b + '/rtc', (response) => {
+                    rtc.join(window.c, response.channel, response.rtc_token, response.user_id).then(() => {
+                        AgoraRTC.createMicrophoneAudioTrack().then((audioTrack) => {
+                            localAudioTrack = audioTrack;
+                            rtc.publish([localAudioTrack]);
+                        });
+                    });
+                    rtm.channel.sendMessage({text: JSON.stringify({action: 'pick', customer_id, agent_id: window.rtc.agent_id})});
+                });
+            });
+        },
+        hangup(notify){
+            localAudioTrack.close();
+            rtc.leave();
+            if(notify){
+                rtm.channel.sendMessage({text: JSON.stringify({action: 'hang', customer_id})}).then(() => customer_id = null);
+                $.get(window.b + '/hangup/' + this.inCall, () => {
+                    this.customers.splice(0, 1);
+                    this.inCall = false;
+                });
+            }
         }
     },
     mounted(){

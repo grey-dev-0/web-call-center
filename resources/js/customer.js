@@ -3,7 +3,7 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk";
 window.Pusher = require('pusher-js');
 
-let rtc = {}, rtm = {client: {}, channel: {}}, $ = window.$;
+let rtc = {}, rtm = {client: {}, channel: {}}, $ = window.$, localAudioTrack;
 let app = createApp({
     data(){
         return {
@@ -14,13 +14,39 @@ let app = createApp({
         };
     },
     methods: {
-        initRtc(){
-            rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
+        initRtc(agentId){
+            if(!rtc){
+                rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
+                rtc.on('user-published', async(peer, type) => {
+                    await rtc.subscribe(peer, type);
+                    user.audioTrack.play();
+                });
+                rtc.on('user-unpublished', async(peer) => await rtc.unsubscribe(peer));
+            }
+
+            $.get(window.b + '/rtc?a=' + agentId, (response) => {
+                rtc.join(window.c, response.channel, response.rtc_token, response.user_id).then(() => {
+                    AgoraRTC.createMicrophoneAudioTrack().then((audioTrack) => {
+                        localAudioTrack = audioTrack;
+                        rtc.publish([localAudioTrack]);
+                    });
+                });
+            });
         },
         initRtm(customerId, agentId, token){
             rtm.channel = rtm.client.createChannel(agentId);
             rtm.client.login({uid: customerId, token})
                 .then(() => rtm.channel.join());
+
+            rtm.channel.on('ChannelMessage', (message, peerId) => {
+                message = JSON.parse(message);
+                if(message.customer_id != window.rtc.customer_id)
+                    return;
+                switch(message.action){
+                    case 'pick': this.initRtc(message.agent_id); break;
+                    case 'hang': this.hangup(); break;
+                }
+            });
         },
         fetchOrganizations(){
             $.get(window.b + '/organizations?p=' + this.currentPage, (response) => {
@@ -46,9 +72,19 @@ let app = createApp({
             this.$nextTick(() => this.fetchOrganizations());
         },
         call(organization){
-            $.post(window.b + '/call', {id: organization.id}, (response) => {
+            this.inCall = organization.id;
+            $.post(window.b + '/call', {id: this.inCall}, (response) => {
                 this.initRtm(response.customer_id, response.agent_id, response.rtm_token);
             });
+        },
+        hangup(notify){
+            localAudioTrack.close();
+            rtc.leave();
+            rtm.channel.leave();
+            if(notify)
+                $.get(window.b + '/hangup/' + this.inCall, () => {
+                    this.inCall = false;
+                });
         }
     },
     mounted(){

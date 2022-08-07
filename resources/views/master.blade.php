@@ -10,7 +10,8 @@
     @stack('pre-scripts')
     <script type="text/javascript">
         var a = {{auth()->user()->authenticatable_id}},
-            b = '{{route('wcc-'.auth()->user()->authenticatable_type)}}';
+            b = '{{route('wcc-'.auth()->user()->authenticatable_type)}}',
+            c = '{{env('AGORA_APP_ID')}}';
         $.ajaxSettings.headers = {'X-CSRF-TOKEN': '{{csrf_token()}}'};
     </script>
     @stack('styles')

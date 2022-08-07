@@ -50,7 +50,7 @@ class WebCallCenter extends Migration{
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('agent_id');
             $customerModel = config('web-call-center.customer_model');
-            $agentModel = config('web-call-center.customer_model');
+            $agentModel = config('web-call-center.agent_model');
             $table->foreign('customer_id')->references('id')->on((new $customerModel)->getTable())
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('agent_id')->references('id')->on((new $agentModel)->getTable())

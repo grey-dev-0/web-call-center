@@ -2,6 +2,8 @@
 
 namespace GreyZero\WebCallCenter\Controllers;
 
+use Willywes\AgoraSDK\RtcTokenBuilder;
+
 class AuthController extends Controller{
     public function getLogin(){
         return view('wcc::login');
@@ -16,5 +18,18 @@ class AuthController extends Controller{
     public function getLogout(){
         auth()->logout();
         return redirect()->route('wcc.login');
+    }
+
+    public function getRtcToken(){
+        $authenticatedUser = auth()->user();
+        $prefix = ($authenticatedUser->role == 'agent')? 'a' : 'c';
+        $currentUserId = sha1("$prefix-{$authenticatedUser->authenticatable_id}");
+        $channel = 'rtc-'.($authenticatedUser->role == 'agent'? $currentUserId : request('a'));
+        return response()->json([
+            'rtc_token' => cache()->remember("$channel-$prefix-{$authenticatedUser->authenticatable_id}",
+                now()->addHours(2), fn() => RtcTokenBuilder::buildTokenWithUserAccount(env('AGORA_APP_ID'),
+                    env('AGORA_CERTIFICATE'), $channel, $currentUserId, RtcTokenBuilder::RoleAttendee, 60 * 60 * 2)),
+            'user_id' => $currentUserId
+        ] + compact('channel'));
     }
 }
