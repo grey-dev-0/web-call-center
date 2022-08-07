@@ -33,10 +33,11 @@ class AgentsController extends Controller{
         return response()->json(['customer_id' => sha1("c-{$call->customer_id}")]);
     }
 
-    public function hangup(Call $call){
-        if(empty($call) || $call->agent_id != auth()->user()->authenticatable_id)
+    public function getHangup(Call $call){
+        $user = auth()->user();
+        if(empty($call) || $call->agent_id != $user->authenticatable_id)
             abort(403);
-        $call->update(['ended_at' => now()]);
+        $user->authenticatable->hangup($call);
         return response()->json(['success' => true]);
     }
 }

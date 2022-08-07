@@ -29,4 +29,12 @@ class CustomersController extends Controller{
             'rtm_token' => $token
         ]);
     }
+
+    public function getHangup($organization){
+        $user = auth()->user();
+        $organization = config('web-call-center.organization_model')::find($organization);
+        $call = $organization->calls()->whereCustomerId($user->authenticatable_id)->whereNull('ended_at')->first();
+        $user->authenticatable->hangup($call);
+        return response()->json(['success' => true]);
+    }
 }

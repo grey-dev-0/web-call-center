@@ -12,5 +12,6 @@ Route::group(['prefix' => 'customer'], function(){
     Route::get('/', 'CustomersController@getIndex')->name('wcc-customer');
     Route::get('organizations', 'CustomersController@getOrganizations');
     Route::post('call', 'CustomersController@postCall');
+    Route::get('hangup/{organization}', 'CustomersController@getHangup');
     Route::get('rtc', 'AuthController@getRtcToken');
 });

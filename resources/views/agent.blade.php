@@ -30,7 +30,7 @@
                             <td>
                                 @{{ customer.name }}
                                 <span class="btn btn-sm btn-outline-success ml-4" v-if="!inCall && i == 0" @click="pick(customer)">Pick Up</span>
-                                <span class="btn btn-sm btn-outline-danger ml-4" v-else-if="inCall == customer.id" @click="hanguptrue">Hang Up</span>
+                                <span class="btn btn-sm btn-outline-danger ml-4" v-else-if="inCall == customer.id" @click="hangup(true)">Hang Up</span>
                             </td>
                             <td>@{{ customer.joined_at }}</td>
                         </tr>

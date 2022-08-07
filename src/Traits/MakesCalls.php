@@ -2,8 +2,6 @@
 
 namespace GreyZero\WebCallCenter\Traits;
 
-use GreyZero\WebCallCenter\Models\Organization;
-
 trait MakesCalls{
     use EndsCalls;
 
@@ -38,13 +36,13 @@ trait MakesCalls{
     /**
      * Adds this customer to the least occupied agent's queue of the given organization.
      *
-     * @param Organization|int $organization The instance or ID of the organization to be called.
+     * @param int $organization Ther ID of the organization to be called.
      * @throws \Exception
      * @return \GreyZero\WebCallCenter\Models\Call
      */
     public function enqueue($organization){
-        if(!$organization instanceof Organization)
-            $organization = Organization::find($organization);
+        $organizationClass = config('web-call-center.organization_model');
+        $organization = $organizationClass::find($organization);
 
         // Locking the least occupied agent caching to ensure its accuracy with simultaneous call requests.
         $semaphore = cache()->lock($semaphoreKey = "wcc-o-{$organization->id}", 5);

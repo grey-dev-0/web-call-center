@@ -24,6 +24,9 @@ let app = createApp({
             });
             signaling.private('agent.' + window.a).listen('calls.incoming', (e) => {
                 this.customers.push(e.customer);
+            }).listen('calls.ended', (e) => {
+                if(e.call.id == this.inCall)
+                    this.hangup();
             });
         },
         initRtc(){

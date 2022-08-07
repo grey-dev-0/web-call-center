@@ -13,6 +13,7 @@ class EventServiceProvider extends ServiceProvider{
             \GreyZero\WebCallCenter\Listeners\IncomingCall::class
         ],
         \GreyZero\WebCallCenter\Events\CallEnded::class => [
+            \GreyZero\WebCallCenter\Listeners\ConcludedCall::class,
             \GreyZero\WebCallCenter\Listeners\RearrangeCallsQueue::class
         ]
     ];
