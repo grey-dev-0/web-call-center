@@ -23,9 +23,13 @@
     "extra": {
         "laravel": {
             "providers": [
+                "GreyZero\\WebCallCenter\\Providers\\AgentsProbeServiceProvider",
                 "GreyZero\\WebCallCenter\\Providers\\AppServiceProvider",
                 "GreyZero\\WebCallCenter\\Providers\\EventServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "AgentsProbe": "GreyZero\\WebCallCenter\\Facades\\AgentsProbe"
+            }
         }
     }
 }

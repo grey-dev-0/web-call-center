@@ -12,6 +12,9 @@
         var a = {{auth()->user()->authenticatable_id}},
             b = '{{route('wcc-'.auth()->user()->authenticatable_type)}}',
             c = '{{env('AGORA_APP_ID')}}';
+        @if(auth()->user()->authenticatable_type == 'agent')
+            var d = {{auth()->user()->authenticatable->organization_id}};
+        @endif
         $.ajaxSettings.headers = {'X-CSRF-TOKEN': '{{csrf_token()}}'};
     </script>
     @stack('styles')

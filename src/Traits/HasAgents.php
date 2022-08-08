@@ -28,6 +28,7 @@ trait HasAgents{
      * @return \GreyZero\WebCallCenter\Models\Agent|null
      */
     public function getLeastOccupiedAgentAttribute(){
+        $onlineAgentIds = \AgentsProbe::getOnlineAgents($this->id);
         return $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->orderBy('calls_count')->first();
     }
 

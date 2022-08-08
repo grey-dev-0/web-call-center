@@ -30,6 +30,7 @@ let app = createApp({
                             this.hangup();
                 }
             });
+            window.Echo.join('organization.' + window.d);
         },
         initRtc(){
             rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
@@ -73,7 +74,8 @@ let app = createApp({
                     this.customers.splice(0, 1);
                     this.inCall = false;
                 });
-            }
+            } else
+                this.inCall = false;
         }
     },
     mounted(){

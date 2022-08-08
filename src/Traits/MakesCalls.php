@@ -38,23 +38,23 @@ trait MakesCalls{
      *
      * @param int $organization Ther ID of the organization to be called.
      * @throws \Exception
-     * @return \GreyZero\WebCallCenter\Models\Call
+     * @return ?\GreyZero\WebCallCenter\Models\Call
      */
     public function enqueue($organization){
         $organizationClass = config('web-call-center.organization_model');
         $organization = $organizationClass::find($organization);
 
         // Locking the least occupied agent caching to ensure its accuracy with simultaneous call requests.
-        $semaphore = cache()->lock($semaphoreKey = "wcc-o-{$organization->id}", 5);
+        $semaphore = cache()->lock("wcc-o-{$organization->id}", 5);
         while(!$semaphore->get())
             usleep(25000);
-        $agent_id = $organization->leastOccupiedAgent->id;
+        $agent_id = $organization->leastOccupiedAgent->id?? null;
 
         // Calls queueing is included within the locked process to avoid improper least occupied agent identification
         // by other processes or call requests.
-        if(is_null($call = $organization->calls()->whereCustomerId($this->id)->whereNull('ended_at')->first()))
+        if(!is_null($agent_id) && is_null($call = $organization->calls()->whereCustomerId($this->id)->whereNull('ended_at')->first()))
             $call = $this->calls()->create(compact('agent_id'));
         $semaphore->forceRelease();
-        return $call;
+        return $call?? null;
     }
 }

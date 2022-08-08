@@ -76,6 +76,8 @@ let app = createApp({
                 $.get(window.b + '/hangup/' + this.inCall, () => {
                     this.inCall = false;
                 });
+            else
+                this.inCall = false;
         }
     },
     mounted(){
