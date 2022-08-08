@@ -15,15 +15,6 @@ let app = createApp({
     },
     methods: {
         initRtc(agentId){
-            if(!rtc){
-                rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
-                rtc.on('user-published', async(peer, type) => {
-                    await rtc.subscribe(peer, type);
-                    user.audioTrack.play();
-                });
-                rtc.on('user-unpublished', async(peer) => await rtc.unsubscribe(peer));
-            }
-
             $.get(window.b + '/rtc?a=' + agentId, (response) => {
                 rtc.join(window.c, response.channel, response.rtc_token, response.user_id).then(() => {
                     AgoraRTC.createMicrophoneAudioTrack().then((audioTrack) => {
@@ -39,7 +30,7 @@ let app = createApp({
                 .then(() => rtm.channel.join());
 
             rtm.channel.on('ChannelMessage', (message, peerId) => {
-                message = JSON.parse(message);
+                message = JSON.parse(message.text);
                 if(message.customer_id != window.rtc.customer_id)
                     return;
                 switch(message.action){
@@ -90,6 +81,12 @@ let app = createApp({
     mounted(){
         this.fetchOrganizations();
         rtm.client = AgoraRTM.createInstance(window.rtc.app_id);
+        rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
+        rtc.on('user-published', async(peer, type) => {
+            await rtc.subscribe(peer, type);
+            peer.audioTrack.play();
+        });
+        rtc.on('user-unpublished', async(peer) => await rtc.unsubscribe(peer));
     }
 });
 

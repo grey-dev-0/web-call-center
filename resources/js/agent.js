@@ -14,7 +14,7 @@ let app = createApp({
     },
     methods: {
         initEcho(){
-            window.Echo = signaling = new Echo({
+            window.Echo = new Echo({
                 broadcaster: 'pusher',
                 key: 'wcckey',
                 wsHost: window.location.hostname,
@@ -22,11 +22,13 @@ let app = createApp({
                 encrypted: true,
                 disableStats: true
             });
-            signaling.private('agent.' + window.a).listen('calls.incoming', (e) => {
-                this.customers.push(e.customer);
-            }).listen('calls.ended', (e) => {
-                if(e.call.id == this.inCall)
-                    this.hangup();
+            window.Echo.private('agent.' + window.a).notification((notification) => {
+                switch(notification.type){
+                    case 'calls.incoming': this.customers.push(notification.customer); break;
+                    case 'calls.ended':
+                        if(notification.call.id == this.inCall)
+                            this.hangup();
+                }
             });
         },
         initRtc(){
@@ -38,7 +40,7 @@ let app = createApp({
 
             rtc.on('user-published', async (peer, type) => {
                 await rtc.subscribe(peer, type);
-                user.audioTrack.play();
+                peer.audioTrack.play();
             });
             rtc.on('user-unpublished', async (peer) => await rtc.unsubscribe(peer));
         },

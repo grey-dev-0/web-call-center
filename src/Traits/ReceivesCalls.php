@@ -14,7 +14,7 @@ trait ReceivesCalls{
      * @return string
      */
     public function receivesBroadcastNotificationsOn(){
-        return "agents.{$this->id}";
+        return "agent.{$this->id}";
     }
 
     /**

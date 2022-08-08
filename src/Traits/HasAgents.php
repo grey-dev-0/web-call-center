@@ -38,7 +38,7 @@ trait HasAgents{
      * @return \GreyZero\WebCallCenter\Models\Agent|null
      */
     public function getMostOccupiedAgentAttribute(){
-        return $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->where('calls_count', '>', 1)
+        return $this->agents()->withCount(['calls' => fn($calls) => $calls->whereNull('ended_at')])->having('calls_count', '>', 1)
             ->orderBy('calls_count', 'desc')->first();
     }
 }

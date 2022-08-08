@@ -10,7 +10,7 @@ class AgentsController extends Controller{
         $agent = auth()->user()->authenticatable;
         $token = cache()->remember("rtm-a-{$agent->id}", now()->addDay(),
             fn() => RtmTokenBuilder::buildToken(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), sha1("a-{$agent->id}"),
-                RtmTokenBuilder::RoleRtmUser, 60 * 60 * 24));
+                RtmTokenBuilder::RoleRtmUser, time() + 60 * 60 * 24));
         return view('wcc::agent', compact('agent') + [
             'rtc' => ['app_id' => env('AGORA_APP_ID'), 'agent_id' => sha1("a-{$agent->id}")] + compact('token')
         ]);

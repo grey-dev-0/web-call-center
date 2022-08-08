@@ -22,7 +22,7 @@ class CustomersController extends Controller{
         $customer = auth()->user()->authenticatable;
         $token = cache()->remember("rtm-c-{$customer->id}", now()->addDay(),
             fn() => RtmTokenBuilder::buildToken(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), sha1("c-{$customer->id}"),
-                RtmTokenBuilder::RoleRtmUser, 60 * 60 * 24));
+                RtmTokenBuilder::RoleRtmUser, time() + 60 * 60 * 24));
         return response()->json([
             'customer_id' => sha1("c-{$customer->id}"),
             'agent_id' => sha1('a-'.$customer->enqueue(request('id'))->agent_id),

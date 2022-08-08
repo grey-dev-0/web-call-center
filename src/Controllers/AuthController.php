@@ -28,8 +28,11 @@ class AuthController extends Controller{
         return response()->json([
             'rtc_token' => cache()->remember("$channel-$prefix-{$authenticatedUser->authenticatable_id}",
                 now()->addHours(2), fn() => RtcTokenBuilder::buildTokenWithUserAccount(env('AGORA_APP_ID'),
-                    env('AGORA_CERTIFICATE'), $channel, $currentUserId, RtcTokenBuilder::RoleAttendee, 60 * 60 * 2)),
-            'user_id' => $currentUserId
+                    env('AGORA_CERTIFICATE'), $channel, $currentUserId, RtcTokenBuilder::RoleAttendee, time() + 60 * 60 * 2)),
+            'user_id' => $currentUserId,
+            'debug' => [
+                'user' => $authenticatedUser
+            ]
         ] + compact('channel'));
     }
 }

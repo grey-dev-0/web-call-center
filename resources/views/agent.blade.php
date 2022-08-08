@@ -26,7 +26,7 @@
                     </thead>
                     <tbody>
                     <template v-if="customers.length" v-for="(customer, i) in customers">
-                        <tr :class="(inCall && i == 0)? 'bg-success' : ''">
+                        <tr :class="(inCall && i == 0)? 'bg-green-8' : ''">
                             <td>
                                 @{{ customer.name }}
                                 <span class="btn btn-sm btn-outline-success ml-4" v-if="!inCall && i == 0" @click="pick(customer)">Pick Up</span>
