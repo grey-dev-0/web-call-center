@@ -23,9 +23,14 @@ class CustomersController extends Controller{
         $token = cache()->remember("rtm-c-{$customer->id}", now()->addDay(),
             fn() => RtmTokenBuilder::buildToken(env('AGORA_APP_ID'), env('AGORA_CERTIFICATE'), sha1("c-{$customer->id}"),
                 RtmTokenBuilder::RoleRtmUser, time() + 60 * 60 * 24));
+        if(is_null($call = $customer->enqueue(request('id'))))
+            return response()->json([
+                'message' => 'There are no available agents to serve you at the moment, please try again later.',
+                'success' => false
+            ], 404);
         return response()->json([
             'customer_id' => sha1("c-{$customer->id}"),
-            'agent_id' => sha1('a-'.$customer->enqueue(request('id'))->agent_id),
+            'agent_id' => sha1('a-'.$call->agent_id),
             'rtm_token' => $token
         ]);
     }

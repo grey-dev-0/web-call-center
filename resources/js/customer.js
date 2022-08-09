@@ -63,15 +63,20 @@ let app = createApp({
             this.$nextTick(() => this.fetchOrganizations());
         },
         call(organization){
-            this.inCall = organization.id;
-            $.post(window.b + '/call', {id: this.inCall}, (response) => {
+            $.post(window.b + '/call', {id: organization.id}, (response) => {
+                this.inCall = organization.id;
                 this.initRtm(response.customer_id, response.agent_id, response.rtm_token);
+            }).fail((xhr) => {
+                if(xhr.status == 404)
+                    alert(xhr.responseJSON.message);
+                console.error(xhr.responseJSON);
             });
         },
         hangup(notify){
             localAudioTrack.close();
             rtc.leave();
             rtm.channel.leave();
+            rtm.client.logout();
             if(notify)
                 $.get(window.b + '/hangup/' + this.inCall, () => {
                     this.inCall = false;

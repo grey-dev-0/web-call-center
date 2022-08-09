@@ -21,6 +21,12 @@ class AgentsProbe{
      * @throws \Pusher\PusherException
      */
     public function getOnlineAgents($organizationId){
-        return collect($this->pusher->get("/channels/presence-organization.$organizationId/users")->users?? [])->pluck('id')->toArray();
+        try{
+            return collect($this->pusher->get("/channels/presence-organization.$organizationId/users")->users?? [])->pluck('id')->toArray();
+        } catch(\Exception $e){
+            if($e instanceof \Pusher\PusherException && str_contains($e->getMessage(), 'Unknown channel'))
+                return [];
+            throw $e;
+        }
     }
 }

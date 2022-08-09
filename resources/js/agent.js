@@ -16,7 +16,7 @@ let app = createApp({
         initEcho(){
             window.Echo = new Echo({
                 broadcaster: 'pusher',
-                key: 'wcckey',
+                key: window.k,
                 wsHost: window.location.hostname,
                 wssPort: 443,
                 encrypted: true,
@@ -65,17 +65,18 @@ let app = createApp({
                 });
             });
         },
+        popCurrentCustomer(){
+            this.customers.splice(0, 1);
+            this.inCall = false;
+        },
         hangup(notify){
             localAudioTrack.close();
             rtc.leave();
             if(notify){
                 rtm.channel.sendMessage({text: JSON.stringify({action: 'hang', customer_id})}).then(() => customer_id = null);
-                $.get(window.b + '/hangup/' + this.inCall, () => {
-                    this.customers.splice(0, 1);
-                    this.inCall = false;
-                });
+                $.get(window.b + '/hangup/' + this.inCall, this.popCurrentCustomer);
             } else
-                this.inCall = false;
+                this.popCurrentCustomer();
         }
     },
     mounted(){
