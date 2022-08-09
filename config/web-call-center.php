@@ -3,9 +3,14 @@ return [
     // Prefix of database tables included in this package.
     'tables_prefix' => 'wcc',
 
-    // Default authentication middleware.
+    // Main authentication middleware to be used by the package, defaults to "wcc".
     // Set to other than default value to use your own authentication model and middleware.
     'middleware' => 'wcc',
+
+    // Determines whether the authentication model morphs to the agent or the customer models.
+    // ONLY change this in case of custom middleware and authentication model as per the previous setting,
+    // where the custom authentication model does NOT morph to the agent nor the customer models.
+    'morph_authenticatable' => true,
 
     // You can set a fixed URL prefix for all routes served by the package here.
     'prefix' => null,

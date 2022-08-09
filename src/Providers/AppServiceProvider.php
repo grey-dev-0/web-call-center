@@ -11,7 +11,7 @@ class AppServiceProvider extends ServiceProvider{
      * @return void
      */
     public function register(){
-        $this->mergeConfigFrom(__DIR__ . '/../../config/web-call-center.php', 'web-call-center');
+        $this->mergeConfigFrom(__DIR__.'/../../config/web-call-center.php', 'web-call-center');
     }
 
     /**
@@ -20,16 +20,19 @@ class AppServiceProvider extends ServiceProvider{
      * @return void
      */
     public function boot(){
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'wcc');
 
-        $this->publishes([__DIR__.'/../../database/seeders' => database_path('seeders')], 'seeder');
-        $this->publishes([__DIR__.'/../../resources/views' => base_path('resources/views/vendor/wcc')], 'views');
-        $this->publishes([__DIR__.'/../../public' => public_path('vendor/wcc')], 'assets');
+        if($this->app->runningInConsole()){
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+            $this->publishes([__DIR__.'/../../config/web-call-center.php' => config_path('web-call-center.php')], 'config');
+            $this->publishes([__DIR__.'/../../database/seeders' => database_path('seeders')], 'seeder');
+            $this->publishes([__DIR__.'/../../resources/views' => base_path('resources/views/vendor/wcc')], 'views');
+            $this->publishes([__DIR__.'/../../public' => public_path('vendor/wcc')], 'assets');
+        }
 
         \Illuminate\Database\Eloquent\Relations\Relation::enforceMorphMap([
-            'agent' => \GreyZero\WebCallCenter\Models\Agent::class,
-            'customer' => \GreyZero\WebCallCenter\Models\Customer::class
+            'agent' => config('web-call-center.agent_model'),
+            'customer' => config('web-call-center.customer_model')
         ]);
 
         if(config('web-call-center.middleware') == 'wcc'){
