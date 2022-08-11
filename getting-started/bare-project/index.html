@@ -42,6 +42,8 @@
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github.min.css">
     
+      <link rel="stylesheet" href="../../extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -353,6 +355,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-integrating-laravel-websockets" class="md-nav__link">
+    4. Integrating Laravel Websockets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-web-server-configuration" class="md-nav__link">
+    5. Web Server Configuration
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -418,6 +434,20 @@
     <li class="md-nav__item">
       <a href="../../third-parties/agora/" class="md-nav__link">
         Agora
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../third-parties/websocket/" class="md-nav__link">
+        Laravel Websockets
       </a>
     </li>
   
@@ -524,6 +554,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-integrating-laravel-websockets" class="md-nav__link">
+    4. Integrating Laravel Websockets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-web-server-configuration" class="md-nav__link">
+    5. Web Server Configuration
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -544,40 +588,139 @@
 <p>First you'll need a fresh installation of the Laravel framework by going through its <a href="https://laravel.com/docs">official documentation here</a>, or you can follow the following summarized steps.</p>
 <h3 id="1a-create-project">1.a. Create project</h3>
 <p>In terminal at your web root please run the following command:</p>
-<pre><code class="language-shell">$ composer create-project laravel/laravel &lt;your_project_name&gt; --prefer-dist
-$ cd &lt;your_project_name&gt;
-</code></pre>
+<pre class="highlight"><code class="language-shell">$ composer create-project laravel/laravel &lt;your_project_name&gt; --prefer-dist
+$ cd &lt;your_project_name&gt;</code></pre>
 <p>Replacing <code>&lt;your_project_name&gt;</code> with project name of your preference.</p>
 <h3 id="1b-setting-up-the-database">1.b. Setting up the Database.</h3>
 <p>Then you'll have to create the database for the project so, you'll need to login to your database server in terminal.</p>
-<pre><code class="language-shell">$ mysql -u &lt;username&gt; -p
-</code></pre>
+<pre class="highlight"><code class="language-shell">$ mysql -u &lt;username&gt; -p</code></pre>
 <p>Replacing <code>&lt;username&gt;</code> with your database server's username then, enter the password when prompted and, finally in the open <code>mysql</code> terminal you may write:</p>
-<pre><code class="language-sql">create database &lt;database_name&gt;;
-exit;
-</code></pre>
+<pre class="highlight"><code class="language-sql">create database &lt;database_name&gt;;
+exit;</code></pre>
 <p>Replacing <code>&lt;database_name&gt;</code> with the name you'd like to give to your new database.</p>
 <p>Then in the <code>.env</code> file found in the root directory of your project, please set the values of all variables starting with <code>DB_</code> accordingly.</p>
 <h2 id="2-installing-web-call-center">2. Installing Web Call Center</h2>
 <p>This project is created as a package to be integrated with a Laravel application, that's why we had to create fresh project first in the previous step.</p>
 <h3 id="2a-requiring-the-package">2.a. Requiring the Package</h3>
 <p>Now to install the project, in the terminal at your project's root directory, please write the following.</p>
-<pre><code class="language-shell">$ composer require grey-dev-0/web-call-center:@dev
-</code></pre>
+<pre class="highlight"><code class="language-shell">$ composer require grey-dev-0/web-call-center:@dev</code></pre>
 <h3 id="2b-publishing-assets">2.b. Publishing Assets</h3>
 <p>Web call center supports customizations to its views and configurations thus, you should publish them to your project in case if you need to customize any of the views (UI) or configurations (settings).</p>
-<pre><code class="language-shell">$ php artisan vendor:publish --force --provider='GreyZero\WebCallCenter\Providers\AppServiceProvider'
-</code></pre>
+<pre class="highlight"><code class="language-shell">$ php artisan vendor:publish --force --provider='GreyZero\WebCallCenter\Providers\AppServiceProvider'</code></pre>
 <h3 id="2c-populating-the-database">2.c. Populating the Database</h3>
 <p>Well we've created the database for our project, but we haven't started using it yet, so in the same terminal please write the following:</p>
-<pre><code class="language-shell">$ php artisan queue:table
-$ php artisan migrate
-</code></pre>
+<pre class="highlight"><code class="language-shell">$ php artisan queue:table
+$ php artisan migrate</code></pre>
 <p>The last couple of commands have published Laravel's background queue jobs tables that will handle processing operations done in background and, it also creates the database tables required by the project to run in general.</p>
-<!-- BEGIN INCLUDE ../../agora-notice.md -->
 <h2 id="3-integrating-agora">3. Integrating Agora</h2>
-<p>The package relies on <a href="https://agora.io/../..">Agora IO</a> WebRTC services to implement the voice calls feature between customers and agents, the service provides a free plan that's a good starter for this project so, first you'll have to sign up to their service <a href="https://sso.agora.io/en/signup">here</a> or, if you already have an account you can directly use it.</p>
-<p>For detailed steps on how to setup Agora in our project please refer to <a href="/third-pariesy/agora/">Agora installation page</a>.</p>
+<!-- BEGIN INCLUDE ../../common/agora.md -->
+<p>The package relies on <a href="https://agora.io/../../common">Agora IO</a> WebRTC services to implement the voice calls feature between customers and agents, the service provides a free plan that's a good starter for this project so, first you'll have to sign up to their service <a href="https://sso.agora.io/en/signup">here</a> or, if you already have an account you can directly use it.</p>
+<p>For detailed steps on how to setup Agora in our project please refer to <a href="../../third-parties/agora/#enabling-agora-integration">Agora installation page</a>.</p>
+<!-- END INCLUDE -->
+
+<h2 id="4-integrating-laravel-websockets">4. Integrating Laravel Websockets</h2>
+<!-- BEGIN INCLUDE ../../common/websocket.md -->
+<p><a href="https://beyondco.de/docs/laravel-websockets/getting-started/introduction">Laravel Websockets</a> is a library used internally by this project that enables the server to monitor which customer support agents are currently online within each organization, so that incoming calls can only be assigned to online agents.</p>
+<p>To set it up please refer to <a href="../../third-parties/websocket/#laravel-websockets-integration">Laravel Websockets installation page</a>.</p>
+<!-- END INCLUDE -->
+
+<h2 id="5-web-server-configuration">5. Web Server Configuration</h2>
+<!-- BEGIN INCLUDE ../../common/server.md -->
+<p>At this point our project is running in background but, most likely it's not serving anyone because, we haven't covered the web server configuration for our project so, let's finalize our setup with this last step.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Nginx</label><label for="__tabbed_1_2">Apache</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If you don't have nginx configuration file for the project yet, please create one in <code>/etc/nginx/conf.d</code> directory, filename doesn't matter much as long as it ends with <code>.conf</code> extension, in that file whether you've just created it or you're editing an existing one please ensure it matches the following, replacing all <code>&lt;placeholder&gt;</code> values with your corresponding values:</p>
+<pre class="highlight"><code class="language-nginx">server {
+    listen       80;        # Disable this on Production server for security
+    listen       [::]:80;   # Disable this too on Production
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    server_name  &lt;your_domain&gt;;
+    ssl_certificate /etc/nginx/ssl/certificate.pem;
+    ssl_certificate_key /etc/nginx/ssl/key.pem;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_session_tickets off;
+    ssl_stapling off;
+    ssl_stapling_verify off;
+    index index.php;
+    root &lt;aboslute_path_to_project&gt;/public;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location /app/&lt;app_key_in_env_file&gt; {
+        proxy_pass http://127.0.0.1:6001;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade "websocket";
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 30000s;
+        proxy_send_timeout 30000s;
+        proxy_redirect off;
+        proxy_connect_timeout 30000s;
+    }
+
+    # Replace this with your php-fpm configuration block or correct configuration file.
+    include common/php-fpm.conf;
+
+    location ~ \.env$ {
+        deny all;
+    }
+}</code></pre>
+<p><strong>PS:</strong> If you have changed the default websocket port with <code>LARAVEL_WEBSOCKETS_PORT</code> variable in the <code>.env</code> file, please replace the port <code>6001</code> in the nginx configuration above with the one you specified in the <code>.env</code> file accordingly.</p>
+<p><strong>IMPORTANT:</strong> After saving the file you'll need to run the following command in terminal to use the new configuration.</p>
+<pre class="highlight"><code class="language-shell">$ nginx -s reload</code></pre>
+</div>
+<div class="tabbed-block">
+<p>You'll need to add the following <code>VirtualHost</code> block to your default Apache configuration or, edit the one that corresponds with your server's domain name if you're on a server, replacing all <code>&lt;placeholder&gt;</code> values with your corresponding values, the file can be created or edited if exists in <code>/etc/httpd/conf.d</code> directory:</p>
+<pre class="highlight"><code class="language-apache">&lt;VirtualHost *:80&gt;      # Remove this block on Production server for security.
+    ServerName &lt;your_domain_name&gt;
+    DocumentRoot &lt;aboslute_path_to_project&gt;/public
+
+    &lt;Location "/app/&lt;app_key_in_env_file&gt;"&gt;
+        ProxyRequests on
+        RequestHeader set X-Forwarded-Proto "http"
+        ProxyPass / https://127.0.0.1:6001/
+        ProxyPassReverse / https://127.0.0.1:6001/
+
+        RewriteEngine on
+        RewriteCond %{HTTP:UPGRADE} ^WebSocket$ [NC]
+        RewriteCond %{HTTP:CONNECTION} ^Upgrade$ [NC]
+        RewriteRule .* ws://127.0.0.1:6001%{REQUEST_URI} [P]
+    &lt;/Location&gt;
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+    ServerName &lt;your_domain_name&gt;
+    DocumentRoot &lt;aboslute_path_to_project&gt;/public
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/certificate.pem
+    SSLCertificateKeyFile /etc/apache2/ssl/key.pem
+
+    &lt;Location "/app/&lt;app_key_in_env_file&gt;"&gt;
+        ProxyRequests on
+        RequestHeader set X-Forwarded-Proto "http"
+        ProxyPass / https://127.0.0.1:6001/
+        ProxyPassReverse / https://127.0.0.1:6001/
+
+        RewriteEngine on
+        RewriteCond %{HTTP:UPGRADE} ^WebSocket$ [NC]
+        RewriteCond %{HTTP:CONNECTION} ^Upgrade$ [NC]
+        RewriteRule .* ws://127.0.0.1:6001%{REQUEST_URI} [P]
+    &lt;/Location&gt;
+&lt;/VirtualHost&gt;</code></pre>
+<p><strong>PS:</strong> If you have changed the default websocket port with <code>LARAVEL_WEBSOCKETS_PORT</code> variable in the <code>.env</code> file, please replace the port <code>6001</code> in the apache configuration above with the one you specified in the <code>.env</code> file accordingly.</p>
+<p><strong>IMPORTANT:</strong> After saving the file you'll need to run the following command in terminal to use the new configuration.</p>
+<pre class="highlight"><code class="language-shell">$ systemctl restart httpd</code></pre>
+<p>If that didn't work due to a <code>command not found</code> error, you can write:</p>
+<pre class="highlight"><code class="language-shell">$ service httpd restart</code></pre>
+</div>
+</div>
+</div>
 <!-- END INCLUDE -->
 
               
@@ -691,7 +834,7 @@ $ php artisan migrate
     
       <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+        <script src="../../highlight.min.js"></script>
       
         <script src="../../highlight.js"></script>
       

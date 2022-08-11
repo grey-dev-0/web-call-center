@@ -42,6 +42,8 @@
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github.min.css">
     
+      <link rel="stylesheet" href="../../extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -64,6 +66,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#agora" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -315,11 +322,72 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Agora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         Agora
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-agora-integration" class="md-nav__link">
+    Enabling Agora Integration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continue-the-setup" class="md-nav__link">
+    Continue the Setup.
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../websocket/" class="md-nav__link">
+        Laravel Websockets
+      </a>
     </li>
   
 
@@ -348,6 +416,37 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-agora-integration" class="md-nav__link">
+    Enabling Agora Integration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continue-the-setup" class="md-nav__link">
+    Continue the Setup.
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -361,9 +460,24 @@
                 
 
 
-  <h1>Agora</h1>
-
-
+<h1 id="agora">Agora</h1>
+<h2 id="overview">Overview</h2>
+<p><a href="https://agora.io">Agora</a> is a WebRTC service that provides Video / Voice / Text chat implementation that can be integrated and added to any application, it's used by this project to enable customers to contact customer support / service agents on web voice calls, which can be initiated from a web browser or a mobile application that uses Agora SDK.</p>
+<h2 id="enabling-agora-integration">Enabling Agora Integration</h2>
+<p>To start using this project it's required that you use your Agora account's integration credentials so, to achieve this please follow the upcoming steps:</p>
+<ol>
+<li>Signup on Agora <a href="https://sso.agora.io/en/signup">here</a>, it's free and, no credit / debit card entry required.</li>
+<li>Create your first Agora project on their dashboard by following their on-boarding wizard.</li>
+<li>In Agora's main dashboard page, click the <code>"Config"</code> button found within your project's section.</li>
+<li>Click the copy icon in the <code>"App ID"</code> field then paste it to the end of your Laravel project's <code>.env</code> file with the key <code>AGORA_APP_ID</code> so, the line added is <code>AGORA_APP_ID=&lt;your_app_id&gt;</code> replacing <code>&lt;your_app_id&gt;</code> with the code you've copied.</li>
+<li>Click the copy icon in the <code>"App Certificate"</code> field then paste it to the end of the <code>.env</code> file like the previous one but with the key <code>AGORA_CERTIFICATE</code>.</li>
+</ol>
+<h2 id="continue-the-setup">Continue the Setup.</h2>
+<p>That's it, you've successfully integrated Agora service to the project, you'll need to follow the remaining steps to finalize the setup of the project so you can now:</p>
+<ul>
+<li><a href="../../getting-started/bare-project/#4-integrating-laravel-websockets">Continue Bare Project setup</a>.</li>
+<li><a href="../../getting-started/integrated-project">Continue Integrated Project setup</a>.</li>
+</ul>
 
               
             </article>
@@ -398,6 +512,21 @@
           </div>
         </a>
       
+      
+        
+        <a href="../websocket/" class="md-footer__link md-footer__link--next" aria-label="Next: Laravel Websockets" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Laravel Websockets
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
@@ -461,7 +590,7 @@
     
       <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+        <script src="../../highlight.min.js"></script>
       
         <script src="../../highlight.js"></script>
       
