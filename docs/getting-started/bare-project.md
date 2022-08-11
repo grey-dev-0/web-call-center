@@ -78,3 +78,14 @@ The last couple of commands have published Laravel's background queue jobs table
 ## 5. Web Server Configuration
 
 {% include-markdown "../../common/server.md" %}
+
+## 6. We're Done. What's Next!
+
+If you have followed all the steps above you're having a functional call center web application running but, there are no organizations, agents nor, customers in the system to try out so, you have two options:
+
+1. Connect to the project's database and create them yourself.
+2. Or run `php artisan db:seed --class TestSeeder`.
+
+If you run the seeder, a couple of dummy organizations will be created for you in the database including some agents for each and, some customers, by accessing `https://<your_domain>/login` - replacing `<your_domain>` with your actual project's domain - then entering the username `agent00` or `client20` and password `test123` you'll be logged in to the corresponding dashboard.
+
+You can check the rest of the accounts created in the `wcc_users` table in the project's database.
