@@ -19,13 +19,17 @@ plugins:
   - include-markdown
   - search
 markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.highlight:
       use_pygments: false
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js
+  - highlight.min.js
   - highlight.js
 extra_css:
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github.min.css
+  - extra.css
 extra:
   social:
     - icon: fontawesome/brands/twitter

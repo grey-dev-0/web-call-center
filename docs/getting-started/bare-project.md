@@ -67,4 +67,14 @@ $ php artisan migrate
 
 The last couple of commands have published Laravel's background queue jobs tables that will handle processing operations done in background and, it also creates the database tables required by the project to run in general.
 
-{% include-markdown "../../agora-notice.md" %}
+## 3. Integrating Agora
+
+{% include-markdown "../../common/agora.md" %}
+
+## 4. Integrating Laravel Websockets
+
+{% include-markdown "../../common/websocket.md" %}
+
+## 5. Web Server Configuration
+
+{% include-markdown "../../common/server.md" %}
