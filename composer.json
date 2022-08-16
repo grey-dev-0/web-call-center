@@ -17,6 +17,7 @@
     "require": {
         "beyondcode/laravel-websockets":  "^1.0",
         "laravel/framework": "^8.0|^9.0",
+        "laravel/sanctum":  ">=2.0",
         "pusher/pusher-php-server": "^7.0",
         "willywes/agora-sdk-php": "^0.1.3"
     },
