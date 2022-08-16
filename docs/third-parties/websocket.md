@@ -60,4 +60,4 @@ These couple of lines will run the required services mentioned and log their out
 That's it, you've successfully setup Laravel Websockets for the project, you'll need to follow the remaining steps to finalize the setup of the project so you can now:
 
 - [Continue Bare Project setup](../../getting-started/bare-project/#5-web-server-configuration).
-- [Continue Integrated Project setup](../../getting-started/integrated-project).
+- [Continue Integrated Project setup](../../getting-started/integrated-project/#5-web-server-configuration).

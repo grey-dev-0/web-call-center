@@ -19,4 +19,4 @@ To start using this project it's required that you use your Agora account's inte
 That's it, you've successfully integrated Agora service to the project, you'll need to follow the remaining steps to finalize the setup of the project so you can now:
 
 - [Continue Bare Project setup](../../getting-started/bare-project/#4-integrating-laravel-websockets).
-- [Continue Integrated Project setup](../../getting-started/integrated-project).
+- [Continue Integrated Project setup](../../getting-started/integrated-project/#4-integrating-laravel-websockets).

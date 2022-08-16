@@ -1,5 +1,3 @@
-At this point our project is running in background but, most likely it's not serving anyone because, we haven't covered the web server configuration for our project so, let's finalize our setup with this last step.
-
 === "Nginx"
 
     If you don't have nginx configuration file for the project yet, please create one in `/etc/nginx/conf.d` directory, filename doesn't matter much as long as it ends with `.conf` extension, in that file whether you've just created it or you're editing an existing one please ensure it matches the following, replacing all `<placeholder>` values with your corresponding values:
@@ -47,13 +45,17 @@ At this point our project is running in background but, most likely it's not ser
     }
     ```
 
-    **PS:** If you have changed the default websocket port with `LARAVEL_WEBSOCKETS_PORT` variable in the `.env` file, please replace the port `6001` in the nginx configuration above with the one you specified in the `.env` file accordingly.
+    !!! info "Notice"
 
-    **IMPORTANT:** After saving the file you'll need to run the following command in terminal to use the new configuration.
+        If you have changed the default websocket port with `LARAVEL_WEBSOCKETS_PORT` variable in the `.env` file, please replace the port `6001` in the nginx configuration above with the one you specified in the `.env` file accordingly.
 
-    ```shell
-    $ nginx -s reload
-    ```
+    !!! warning "IMPORTANT"
+
+        After saving the file you'll need to run the following command in terminal to use the new configuration.
+
+        ```shell
+        $ nginx -s reload
+        ```
 
 === "Apache"
 
@@ -98,16 +100,20 @@ At this point our project is running in background but, most likely it's not ser
     </VirtualHost>
     ```
 
-    **PS:** If you have changed the default websocket port with `LARAVEL_WEBSOCKETS_PORT` variable in the `.env` file, please replace the port `6001` in the apache configuration above with the one you specified in the `.env` file accordingly.
+    !!! info "Notice"
 
-    **IMPORTANT:** After saving the file you'll need to run the following command in terminal to use the new configuration.
+        If you have changed the default websocket port with `LARAVEL_WEBSOCKETS_PORT` variable in the `.env` file, please replace the port `6001` in the apache configuration above with the one you specified in the `.env` file accordingly.
 
-    ```shell
-    $ systemctl restart httpd
-    ```
+    !!! warning "IMPORTANT"
 
-    If that didn't work due to a `command not found` error, you can write:
+        After saving the file you'll need to run the following command in terminal to use the new configuration.
 
-    ```shell
-    $ service httpd restart
-    ```
+        ```shell
+        $ systemctl restart httpd
+        ```
+    
+        If that didn't work due to a `command not found` error, you can write:
+    
+        ```shell
+        $ service httpd restart
+        ```

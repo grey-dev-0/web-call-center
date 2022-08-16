@@ -1,5 +1,7 @@
 # Bare Project
 
+## Overview
+
 This guide will lead you to install the project as a stand-alone web application, most of the configuration settings will be kept intact and, default web views will be used directly.
 
 ## 1. Creating a Laravel project.
@@ -76,6 +78,8 @@ The last couple of commands have published Laravel's background queue jobs table
 {% include-markdown "../../common/websocket.md" %}
 
 ## 5. Web Server Configuration
+
+At this point our project is running in background but, most likely it's not serving anyone because, we haven't covered the web server configuration for our project so, let's finalize our setup with this last step.
 
 {% include-markdown "../../common/server.md" %}
 

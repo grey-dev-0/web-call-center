@@ -14,11 +14,13 @@ theme:
     accent: blue
   features:
     - navigation.top
+    - navigation.expand
     - search.highlight
 plugins:
   - include-markdown
   - search
 markdown_extensions:
+  - admonition
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true

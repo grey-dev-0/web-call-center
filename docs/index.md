@@ -6,7 +6,9 @@ This project aims to provide a web call center service where organizations and i
 
 This project can be used on its own within a [bare Laravel application](getting-started/bare-project), or it can be [integrated within existing Laravel applications](getting-started/integrated-project), please refer to the "Getting Started" page that corresponds with your use case.
 
-**IMPORTANT NOTICE:**  This project is still in early stages of development thus, it only provides basic features as of now, the list of available features is listed in the next section.
+!!! danger "IMPORTANT NOTICE"
+
+    This project is still in early stages of development thus, it only provides basic features as of now, the list of available features is listed in the next section.
 
 ## Features
 
