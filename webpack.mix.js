@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +12,12 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.options({
+    terser: {
+        extractComments: (astNode, comment) => false,
+    }
+})
+
 const glob = require('glob');
 const path = require('path');
 
@@ -22,7 +29,7 @@ mix.extract(['@vue'], 'js/vue.min');
 glob.sync('resources/scss/*.scss').forEach(function(file){
     file = file.replace(/[\\\/]+/g, '/');
     let dest = file.replace('resources/scss', 'public/css').replace(/\.(scss|sass)$/, '.css');
-    mix.sass(file, dest);
+    mix.sass(file, dest).purgeCss();
 });
 glob.sync('resources/js/*.js').forEach(function(file){
     file = file.replace(/[\\\/]+/g, '/');
