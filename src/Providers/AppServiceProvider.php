@@ -60,8 +60,9 @@ class AppServiceProvider extends ServiceProvider{
      * @return void
      */
     private function registerRoutes(){
-        $this->registerApplicationRoutes();
-        $this->registerApplicationRoutes(false);
+        $appRouter = require_once __DIR__.'/../../routes/app.php';
+        $this->registerApplicationRoutes($appRouter);
+        $this->registerApplicationRoutes($appRouter, false);
         $this->registerAuthenticationRoutes();
     }
 
@@ -79,10 +80,11 @@ class AppServiceProvider extends ServiceProvider{
     /**
      * Registers the application routes of web call center.
      *
+     * @param callable|\Closure $appRouter Dynamic application routing closure, used to avoid route names conflict with API routes.
      * @param bool $web Determines whether to register application's routes for web or external API usage.
      * @return void
      */
-    private function registerApplicationRoutes($web = true){
+    private function registerApplicationRoutes($appRouter, $web = true){
         $prefix = config('web-call-center.prefix');
         if($web)
             $middleware = ['web', config('web-call-center.middleware')];
@@ -93,6 +95,6 @@ class AppServiceProvider extends ServiceProvider{
         $router = \Route::middleware($middleware);
         if(!is_null($prefix))
             $router->prefix($prefix);
-        $router->namespace($this->namespace)->group(__DIR__.'/../../routes/app.php');
+        $router->namespace($this->namespace)->group($appRouter($web));
     }
 }
