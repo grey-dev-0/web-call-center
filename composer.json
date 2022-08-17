@@ -1,7 +1,7 @@
 {
     "name": "grey-dev-0/web-call-center",
     "description": "VoIP Call Center Web Application Integratable into a Laravel application.",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
