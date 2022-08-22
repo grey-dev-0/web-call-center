@@ -8,9 +8,10 @@ In order for this project to properly manage and assign incoming calls to online
 
 ### 1. Setting Required `.env` variables.
 
-Please set ensure the existence and setting of the following environment variables in your project's `.env` file.
+Please ensure the existence and setting of the following environment variables in your project's `.env` file.
 
 ```dotenv
+BROADCAST_DRIVER=pusher
 PUSHER_APP_ID=<app_id>
 PUSHER_APP_KEY=<app_key>
 PUSHER_APP_SECRET=<app_secret>
