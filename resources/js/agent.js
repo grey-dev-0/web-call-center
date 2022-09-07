@@ -2,9 +2,10 @@ import {createApp} from "vue";
 import Echo from "laravel-echo"
 import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk";
+import {find as _find} from 'lodash';
 window.Pusher = require('pusher-js');
 
-let rtc = {}, rtm = {client: {}, channel: {}}, signaling = {}, $ = window.$, localAudioTrack, customer_id;
+let rtc = {}, rtm = {client: {}, channel: {}}, $ = window.$, localAudioTrack, customer_id;
 let app = createApp({
     data(){
         return {
@@ -48,6 +49,9 @@ let app = createApp({
         initCustomers(){
             $.get(window.b + '/customers', (response) => {
                 this.customers = response.customers;
+                let activeCustomer = _find(response.customers, (call) => call.started_at != null);
+                if(activeCustomer)
+                    this.pick(activeCustomer);
             });
         },
         pick(customer){

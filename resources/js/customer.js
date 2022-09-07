@@ -1,6 +1,7 @@
 import {createApp} from "vue";
 import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk";
+import {find as _find} from 'lodash';
 window.Pusher = require('pusher-js');
 
 let rtc = {}, rtm = {client: {}, channel: {}}, $ = window.$, localAudioTrack;
@@ -8,6 +9,7 @@ let app = createApp({
     data(){
         return {
             inCall: false,
+            reconnecting: false,
             organizations: [],
             currentPage: 1,
             lastPage: 1
@@ -39,11 +41,16 @@ let app = createApp({
                 }
             });
         },
-        fetchOrganizations(){
+        fetchOrganizations(initial){
             $.get(window.b + '/organizations?p=' + this.currentPage, (response) => {
                 this.currentPage = response.organizations.current_page;
                 this.lastPage = response.organizations.last_page;
                 this.organizations = response.organizations.data;
+                if(initial){
+                    let activeOrganization = _find(response.organizations.data, (organization) => organization.calls.length > 0);
+                    if(activeOrganization)
+                        this.call(activeOrganization);
+                }
             });
         },
         first(){
@@ -79,21 +86,28 @@ let app = createApp({
             rtm.client.logout();
             if(notify)
                 $.get(window.b + '/hangup/' + this.inCall, () => {
-                    this.inCall = false;
+                    this.inCall = this.reconnecting = false;
                 });
             else
-                this.inCall = false;
+                this.inCall = this.reconnecting = false;
         }
     },
     mounted(){
-        this.fetchOrganizations();
+        this.fetchOrganizations(true);
         rtm.client = AgoraRTM.createInstance(window.rtc.app_id);
         rtc = AgoraRTC.createClient({codec: 'vp8', mode: 'rtc'});
         rtc.on('user-published', async(peer, type) => {
+            if(this.reconnecting)
+                this.reconnecting = false;
             await rtc.subscribe(peer, type);
             peer.audioTrack.play();
         });
-        rtc.on('user-unpublished', async(peer) => await rtc.unsubscribe(peer));
+        rtc.on('user-unpublished', async(peer) => {
+            this.reconnecting = true;
+            if(peer.audioTrack)
+                peer.audioTrack.stop();
+            await rtc.unsubscribe(peer);
+        });
     }
 });
 

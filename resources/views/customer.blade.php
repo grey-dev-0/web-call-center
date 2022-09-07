@@ -30,7 +30,10 @@
                             <td class="align-middle">@{{ organization.name }}</td>
                             <td class="text-right">
                                 <div class="btn btn-sm btn-outline-success" v-if="!inCall" @click="call(organization)">Call</div>
-                                <div class="btn btn-sm btn-outline-danger" v-else-if="inCall == organization.id" @click="hangup(true)">Hang Up</div>
+                                <template v-else-if="inCall == organization.id">
+                                    <div class="btn btn-sm btn-outline-secondary mr-1" v-if="reconnecting">Reconnecting..</div>
+                                    <div class="btn btn-sm btn-outline-danger" @click="hangup(true)">Hang Up</div>
+                                </template>
                             </td>
                         </tr>
                     </template>

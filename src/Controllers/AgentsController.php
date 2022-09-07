@@ -19,7 +19,7 @@ class AgentsController extends Controller{
     public function getCustomers(){
         return response()->json([
             'customers' => Call::with('customer:id,name')->whereAgentId(auth()->id())->whereNull('ended_at')
-                ->orderBy('created_at')->take(25)->get(['id', 'customer_id', 'created_at'])
+                ->orderBy('created_at')->take(25)->get(['id', 'customer_id', 'started_at', 'created_at'])
                 ->each(fn($call) => $call->setAttribute('name', $call->customer->name)
                     ->setAttribute('joined_at', $call->created_at->format(config('web-call-center.datetime_format')))
                     ->makeHidden(['customer_id', 'customer', 'created_at']))

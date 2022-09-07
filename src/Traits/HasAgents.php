@@ -18,7 +18,7 @@ trait HasAgents{
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function calls(){
-        return $this->hasManyThrough(\GreyZero\WebCallCenter\Models\Call::class, \GreyZero\WebCallCenter\Models\Agent::class);
+        return $this->hasManyThrough(\GreyZero\WebCallCenter\Models\Call::class, config('web-call-center.agent_model'));
     }
 
     /**

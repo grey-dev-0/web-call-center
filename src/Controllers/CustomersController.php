@@ -13,8 +13,12 @@ class CustomersController extends Controller{
     }
 
     public function getOrganizations(){
+        $query = config('web-call-center.organization_model')::newQuery();
+        $page = request('p', 1);
+        if($page == 1)
+            $query->with('calls', fn($calls) => $calls->whereCustomerId(auth()->user()->authenticatable->id)->whereNull('ends_at'));
         return response()->json([
-            'organizations' => config('web-call-center.organization_model')::paginate(25, ['id', 'name'], 'page', request('p'))
+            'organizations' => $query->paginate(25, ['id', 'name'], 'page', $page)
         ]);
     }
 
